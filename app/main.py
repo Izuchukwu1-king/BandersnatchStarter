@@ -10,7 +10,7 @@ from app.data import Database
 from app.graph import chart
 from app.machine import Machine
 
-SPRINT = 3
+SPRINT = 2
 APP = Flask(__name__)
 
 

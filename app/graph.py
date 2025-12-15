@@ -1,25 +1,49 @@
-from altair import Chart
 from altair import Chart, Tooltip
 from pandas import DataFrame
 
+
 def chart(df, x, y, target) -> Chart:
     """
-    Creates and returns a Chart object from a DataFrame
-    with the specified x, y, and target configuration.
+    df: DataFrame
+    #data to  graph
+    X:str
+    #column to go on X-axis
+    y:str 
+    #column to go on y-axis
+    target:str
+    #column to be shwon in color
+    #return
     """
-    chart_obj = Chart(df)
-    chart_obj.config = {
-        "x": x,
-        "y": y,
-        "target": target
-    }
-    return chart_obj
+    vis = Chart(
+       df,
+       title=f"{y} by {x} for {target}" 
+    ).mark_circle(size=90).encode(
+        x=x,
+        y=y,
+        color=target,
+        tooltip=Tooltip(df.columns.to_list())
+    ).properties(
+        width=400,
+        height=400,
+        padding=50,
+        background="#222222"
+    ).configure(
+        legend={
+            "titleColor":"#666666",
+            "labelColor":"#00000000",
+            "padding":10
+        },
+        title={
+            "color": "#000000",
+            "fontSize":25,
+            "offset":30
+        },
+        # axis={
+        #     #"x":"x",
+        #     "y":"y",
+        #     "title":"title",
+        #     #"color":"target"
+        #}
+    )
 
-    c = chart(df, x="strength", y="speed", target="type")
-
-    c.info()
-
-result = c("strength")   # calls __call__
-
-c.save("chart.pkl")
-
+    return vis
